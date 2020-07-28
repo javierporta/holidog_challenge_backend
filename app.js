@@ -35,6 +35,7 @@ router.get('/', function (req, res) {
 // BOOKS
 router.get('/books', books.list);
 router.get('/books/:id', books.detail);
+router.post('/books', books.create);
 
 
 // all of our routes will be prefixed with /api
