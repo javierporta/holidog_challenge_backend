@@ -18,8 +18,8 @@ var router = express.Router();              // get an instance of the express Ro
 
 // middleware to use for all requests
 router.use(function (req, res, next) {
-    // log
-    console.log(`Called ${req.originalUrl}`)
+    // log. In real world scenario should be stored somewhere in the cloud
+    console.log(`Called ${req.method} ${req.originalUrl}`)
     console.log(`Request made at: ${new Date().toString()}`);
     next(); // make sure we go to the next routes and don't stop here
 });
