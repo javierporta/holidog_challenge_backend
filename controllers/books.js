@@ -1,6 +1,6 @@
-//var BookInstance = require('../models/bookinstance');
+var booksDatabase = require('../mocks/booksDatabase');
 
-// Display list of all BookInstances.
+// Send all books.
 exports.list = function (req, res) {
-    res.send('NOT IMPLEMENTED: BookInstance list');
+    res.json(booksDatabase.booksList.slice(0, 99)); //Send first 100 rows. TODO: Pagination is not made in this example. Real world app must have it 
 };
