@@ -8,7 +8,6 @@ exports.list = async (req, res) => {
 
 exports.detail = async (req, res) => {
     const bookDetails = await booksDatabase.getBookDetails(req.params.id);
-
     if (bookDetails) {
         res.json(bookDetails);
     } else {

@@ -11,6 +11,8 @@ mongoose.set('useFindAndModify', false);
 
 //Get the default connection
 var db = mongoose.connection;
+var { ObjectId } = require('mongodb'); // or ObjectID Not Working
+
 
 //Bind connection to error event (to get notification of connection errors)
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
@@ -21,15 +23,15 @@ var Schema = mongoose.Schema;
 var booksSchema = new Schema({
     name: String,
     isbn: String,
-    _authorId: Schema.Types.ObjectId
+    author: [{ type: Schema.ObjectId, ref: "author" }]
 });
 
 // Compile model from schema
 var bookModel = mongoose.model('book', booksSchema);
 
-const getBooksList = async () => {
+const getBooksList = () => {
     //Here is easy to implement searches on server side (using findOne())
-    return await bookModel.find((err, booksFromDb) => {
+    return bookModel.find((err, booksFromDb) => {
         if (err) return handleError(err);
 
         return booksFromDb;
@@ -37,16 +39,15 @@ const getBooksList = async () => {
 }
 
 const getBookDetails = async (id) => {
-    return await bookModel.findById(id, (err, bookDetailsFromDb) => {
-        if (err) return handleError(err);
+    //Populate (mongoose) method used to nest author.
+    //It's an array because a book may be written by many authors
+    let result = await bookModel.findById(id).populate('author');
 
-        return bookDetailsFromDb;
-    })
-
+    return result;
 }
 
-const updateBook = async (id, bookToUpdate) => {
-    return await bookModel.findByIdAndUpdate(id, bookToUpdate, (err, result) => {
+const updateBook = (id, bookToUpdate) => {
+    return bookModel.findByIdAndUpdate(id, bookToUpdate, (err, result) => {
         if (err) return handleError(err);
 
         return result;
@@ -55,12 +56,13 @@ const updateBook = async (id, bookToUpdate) => {
 }
 
 const createBook = (book) => {
-
+    console.log(book)
     // Create an instance of model bookModel | mapping
     var bookToAdd = new bookModel(
         {
             name: book.name,
-            isbn: book.isbn
+            isbn: book.isbn,
+            author: ObjectId(book.authorId)
         });
 
     // Save the new model instance, passing a callback

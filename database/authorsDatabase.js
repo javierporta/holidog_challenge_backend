@@ -26,17 +26,17 @@ var authorSchema = new Schema({
 // Compile model from schema
 var authorModel = mongoose.model('author', authorSchema);
 
-const getAuthorsList = async () => {
+const getAuthorsList = () => {
     //Here is easy to implement searches on server side (using findOne())
-    return await authorModel.find((err, authorsFromDb) => {
+    return authorModel.find((err, authorsFromDb) => {
         if (err) return handleError(err);
 
         return authorsFromDb;
     })
 }
 
-const getAuthorDetails = async (id) => {
-    return await authorModel.findById(id, (err, authorDetailsFromDb) => {
+const getAuthorDetails = (id) => {
+    return authorModel.findById(id, (err, authorDetailsFromDb) => {
         if (err) return handleError(err);
 
         return authorDetailsFromDb;
@@ -44,8 +44,8 @@ const getAuthorDetails = async (id) => {
 
 }
 
-const updateAuthor = async (id, authorToUpdate) => {
-    return await authorModel.findByIdAndUpdate(id, authorToUpdate, (err, result) => {
+const updateAuthor = (id, authorToUpdate) => {
+    return authorModel.findByIdAndUpdate(id, authorToUpdate, (err, result) => {
         if (err) return handleError(err);
 
         return result;
