@@ -1,4 +1,5 @@
 var booksDatabase = require('../database/booksDatabase');
+const { Types } = require('mongoose');
 
 
 exports.list = async (req, res) => {
@@ -7,7 +8,13 @@ exports.list = async (req, res) => {
 };
 
 exports.detail = async (req, res) => {
-    const bookDetails = await booksDatabase.getBookDetails(req.params.id);
+    let bookId = req.params.id;
+
+    if (!Types.ObjectId.isValid(bookId)) {
+        res.sendStatus(400); //Bad request
+    }
+
+    const bookDetails = await booksDatabase.getBookDetails(bookId);
     if (bookDetails) {
         res.json(bookDetails);
     } else {
