@@ -38,7 +38,7 @@ exports.create = (req, res) => {
         //Add to database
         booksDatabase.createBook(newBook);
 
-        res.sendStatus(200);
+        res.status(201).json(newBook);
     } else {
         res.sendStatus(400); //Bad request. More information about the request might be provided
     }
