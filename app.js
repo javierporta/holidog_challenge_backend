@@ -1,7 +1,10 @@
 
 var express = require('express');
 var app = express();
+var cors = require('cors')
 var bodyParser = require('body-parser');
+
+app.use(cors())
 
 var books = require('./controllers/books');
 var authors = require('./controllers/authors');
