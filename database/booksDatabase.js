@@ -7,6 +7,8 @@ const dbPassword = "Sopq8aRAYRp0Odsd"
 const mongoDbUri = `mongodb+srv://${dbUser}:${dbPassword}@clusterjavier.kclyn.gcp.mongodb.net/${dbName}?retryWrites=true&w=majority`;
 mongoose.connect(mongoDbUri, { useNewUrlParser: true });
 
+mongoose.set('useFindAndModify', false);
+
 //Get the default connection
 var db = mongoose.connection;
 
@@ -43,6 +45,15 @@ const getBookDetails = async (id) => {
 
 }
 
+const updateBook = async (id, bookToUpdate) => {
+    return await bookModel.findByIdAndUpdate(id, bookToUpdate, (err, result) => {
+        if (err) return handleError(err);
+
+        return result;
+    })
+
+}
+
 const createBook = (book) => {
 
     // Create an instance of model bookModel | mapping
@@ -69,3 +80,4 @@ const handleError = (err) => {
 exports.getBooksList = getBooksList;
 exports.getBookDetails = getBookDetails;
 exports.createBook = createBook;
+exports.updateBook = updateBook;

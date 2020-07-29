@@ -9,7 +9,23 @@ exports.list = async (req, res) => {
 exports.detail = async (req, res) => {
     const bookDetails = await booksDatabase.getBookDetails(req.params.id);
 
-    res.json(bookDetails);
+    if (bookDetails) {
+        res.json(bookDetails);
+    } else {
+        res.sendStatus(404); //Not found
+    }
+
+};
+
+exports.update = async (req, res) => {
+    const bookUpdated = await booksDatabase.updateBook(req.params.id, req.body);
+
+    if (bookUpdated) {
+        res.json(bookUpdated);
+    } else {
+        res.sendStatus(404); //Not found
+    }
+
 };
 
 exports.create = (req, res) => {
