@@ -4,6 +4,7 @@ var app = express();
 var bodyParser = require('body-parser');
 
 var books = require('./controllers/books');
+var authors = require('./controllers/authors');
 
 // configure app to use bodyParser()
 // this will let us get the data from a POST
@@ -33,10 +34,23 @@ router.get('/', function (req, res) {
 //Routes registration section
 
 // BOOKS
-router.get('/books', books.list);
-router.get('/books/:id', books.detail);
-router.post('/books', books.create);
-router.put('/books/:id', books.update);
+const booksResourceName = "books";
+//NOTE: I personally do not agree with name convention given in the statement. 
+//According to RESTful conventions and good practices, reources names must be consistent and written in plural.
+//That's why I always use "books" & "authors"
+router.get(`/${booksResourceName}`, books.list);
+router.get(`/${booksResourceName}/:id`, books.detail);
+router.post(`/${booksResourceName}`, books.create);
+router.put(`/${booksResourceName}/:id`, books.update);
+
+// AUTHORS
+const authorsResource = "authors";
+
+router.get(`/${authorsResource}`, authors.list);
+router.get(`/${authorsResource}/:id`, authors.detail);
+router.post(`/${authorsResource}`, authors.create);
+router.put(`/${authorsResource}/:id`, authors.update);
+
 
 // all of our routes will be prefixed with /api
 app.use('/api', router);
