@@ -1,4 +1,4 @@
-# Holidog Challenge Backend
+# Holidog Challenge - Backend
 
 Simple RESTful API built with NodeJS, Express and Mongoose, using my own MongoDB cluster to illustrate better app functionality and code.
 
@@ -29,7 +29,7 @@ Please execute in root folder:
 
 ## How to test it in my local environment?
 
-Make requests to port 8080
+Make requests to port 8080. Postman is recommended.
 
 
 
