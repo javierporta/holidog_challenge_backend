@@ -46,7 +46,16 @@ const getBookDetails = async (id) => {
     return result;
 }
 
-const updateBook = (id, bookToUpdate) => {
+const updateBook = (id, postData) => {
+
+    // Create an instance of model bookModel | mapping
+    var bookToUpdate =
+    {
+        name: postData.name,
+        isbn: postData.isbn,
+        author: ObjectId(postData.authorId)
+    };
+
     return bookModel.findByIdAndUpdate(id, bookToUpdate, (err, result) => {
         if (err) return handleError(err);
 
